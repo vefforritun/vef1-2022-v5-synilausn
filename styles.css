@@ -23,7 +23,7 @@ html {
   /* Grunn bilið okkar er 1rem == 16px */
   --spacing: 1rem;
   /* Hámarksbreidd á efni */
-  --max-width: 1200px;
+  --max-width: 1400px;
 
   --color-primary: #f0f0f8;
 
@@ -36,6 +36,14 @@ html {
   --font-base-size: 1rem;
   --font-family-base: 'Nunito', Helvetica, Arial, sans-serif;
   --font-family-heading: 'Domine', Georgia, serif;
+
+  /* Grid stillingar */
+  --columns: 12;
+  --gutter: 30px;
+  --offset: 20px;
+
+  /* Bil á milli „stærri“ eininga (header, efnisbox, footer) */
+  --vertical-space: calc(var(--gutter));
 }
 
 /* Leturgerðir */
@@ -93,30 +101,79 @@ img {
 
 /* Layout */
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing) * 4);
-}
-
 main {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing) * 4);
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 100%;
 
-  margin: 0 auto;
+  gap: var(--vertical-space);
+  margin: var(--vertical-space) auto;
 
-  padding-left: calc(var(--spacing) * 2);
-  padding-right: calc(var(--spacing) * 2);
-
-  min-height: 100vh;
+  width: calc(100% - (2 * var(--offset)));
   max-width: var(--max-width);
 }
 
 .info-boxes {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing) * 4);
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: auto;
+  gap: var(--vertical-space);
+}
+
+@media (min-width: 600px) {
+  ::root {
+    --vertical-space: calc(var(--gutter) * 2);
+  }
+
+  .info-boxes {
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: auto;
+    gap: var(--gutter);
+  }
+
+  .info {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-template-rows: auto;
+    gap: var(--gutter);
+  }
+
+  .info .content {
+    grid-column: 1 / span 6;
+  }
+
+  .info .image {
+    grid-column: 7 / span 6;
+  }
+
+  .info-right .content {
+    grid-column: 7 / span 6;
+  }
+
+  .info-right .image {
+    grid-column: 1 / span 6;
+  }
+}
+
+@media (min-width: 1000px) {
+  .info .content {
+    grid-column: 2 / span 4;
+  }
+
+  .info .image {
+    grid-column: 7 / span 6;
+  }
+
+  .info-right .content {
+    grid-column: 8 / span 4;
+  }
+
+  .info-right .image {
+    grid-column: 1 / span 6;
+  }
 }
 
 /* Header */
@@ -144,6 +201,7 @@ header .content {
   gap: calc(var(--spacing) * 2);
 
   margin: auto;
+  width: calc(100% - (2 * var(--offset)));
 
   font-family: var(--font-family-heading);
   font-size: calc(var(--font-base-size) * 1.5);
@@ -171,14 +229,7 @@ header .protection {
 
 /* Info blokk */
 
-.info {
-  display: flex;
-  gap: calc(var(--spacing) * 2);
-}
-
 .info .content {
-  width: 50%;
-  max-width: 400px;
   margin: auto;
 }
 
@@ -193,10 +244,11 @@ header .protection {
 }
 
 .info .image {
-  width: 50%;
+  display: flex;
 }
 
 .info .image img {
+  margin: auto;
   transform: rotateZ(2deg);
 }
 
@@ -215,11 +267,10 @@ header .protection {
 }
 
 /* Cards */
-
 .cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing);
+  display: grid;
+  grid-template-rows: auto;
+  gap: var(--gutter);
 }
 
 .card {
@@ -227,7 +278,17 @@ header .protection {
   flex-direction: column;
 
   width: 100%;
-  max-width: calc(50% - var(--spacing) / 2);
+}
+
+@media (min-width: 600px) {
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+  }
+
+  .card {
+    grid-column: span 6;
+  }
 }
 
 .card > .image {
