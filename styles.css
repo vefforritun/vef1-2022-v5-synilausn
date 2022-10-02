@@ -179,6 +179,7 @@ main {
 /* Header */
 
 header {
+  poisition: relative;
   display: flex;
   flex-direction: column;
 
